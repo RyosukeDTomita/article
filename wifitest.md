@@ -7,13 +7,19 @@
 
 ## コマンドを入力するとは?
 - 昔のコンピュータにはマウスを使って直感的に操作することはできず、コマンド入力によってコンピュータを操作していた。
-- コマンドはアプリケーション一覧から、terminal(日本語なら端末)を起動してそこに打ち込む。![]
-- 今回の記事では、背景の色が変わっている部分はコマンドを入力することを表している。
+- コマンドはアプリケーション一覧から、terminal(日本語なら端末)を起動してそこに打ち込む。![terminalイメージ](https://github.com/RyosukeDTomita/article/blob/master/picture/terminal.png)
+## 記事の見方
+- 今回の記事では、背景の色が変わっている部分はコマンドを入力することを表しているので自分のコンピュータでターミナルを開いてみよう。
+- コマンド入力部分で冒頭に#がついているものはコマンドとして実行される命令文ではなく、コメントである。
+> コメント: 実際の処理には関係なく開発者が後からコードを読む人に向けて残すメモのようなもの。
+
 
 ## 必要なもの
 - Wi-Fiルーター(自分のものに限る)他人のWi-Fiルータを勝手に攻撃すると電波法等の法律に違反してしまうため注意!
-- パソコン。(Kali)
-- Wi-FIアダプタ(モニターモードにできるもの) [動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH](https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)[写真]
+![wifi-router](https://github.com/RyosukeDTomita/article/blob/master/picture/router.jpg)
+- パソコン。(Kali-linux推奨)
+- Wi-FIアダプタ(モニターモードにできるもの) [動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH](https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)
+
 
 ## Wi-Fiアダプタの初期設定
 [動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH](https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)を使用するにはドライバーをインストールする必要がある。
@@ -41,9 +47,12 @@ sudo apt install ./realtek-rtl88xxau-dkms_5.6.4.2~git20200916-0kali1_all.deb
 ```shell
 sudo iwconfig #wlan0等のネットワークインターフェースカードが表示されればOK
 ```
-
+![認識の確認]()
 #### virtualboxで立ち上げた仮想OSにWi-Fiモニターを認識させる。
-- VirtualBoxで起動したOSの画面の上部のデバイスタブをクリックして、USB→USBの設定をクリックすると、現在仮想OSが認識しているデバイスのリストが表示される。- 右側のプラスボタンをクリックして、Realtek 802.11n NICを追加する。[写真]
+- VirtualBoxで起動したOSの画面の上部のデバイスタブをクリックして、USB→USBの設定をクリックすると、現在仮想OSが認識しているデバイスのリストが表示される。- 右側のプラスボタンをクリックして、Realtek 802.11n NICを追加する。
+![手順1](https://github.com/RyosukeDTomita/article/blob/master/picture/vm.jpg)
+
+![手順2](https://github.com/RyosukeDTomita/article/blob/master/picture/vm2.png)
 ******
 
 
@@ -135,7 +144,8 @@ sudo airodump-ng wlp2s0mon #周囲のWi-Fi情報を取得する。
 sudo airodump-ng --bssid 1E:B1:7F:14:0C:01 --channel 13 --write wep wlp2s0mon
 ```
 #### パケットキャプチャ中の画面の見方
-- Data: 収集したパケットの量。[写真]
+![packet](https://github.com/RyosukeDTomita/article/blob/master/picture/packet.png)
+- Data: 収集したパケットの量。
 - アクセスしている端末のMACアドレスが下に表示される。
 
 ### パスワード解析を開始
@@ -216,7 +226,8 @@ sudo airodump-ng -c 1 --bssid 88:57:EE:17:CD:92 -w wpa2 wlp2s0mon #-cでチャ�
 sudo aireplay-ng -0 1 -a 88:57:EE:17:CD:92 -c e4:b3:18:bb:ea:1d wlp2s0mon #-0で認証を無効化して引数の数(1)回それを行う。
 ```
 - コマンド実行後に少し待つと、自動再接続が行われる。
-- 4way handshakeをキャプチャするとパケットをキャプチャしている画面に「WPA handshake」と表示されるので確認後にキャプチャを終了する。[画像]
+- 4way handshakeをキャプチャするとパケットをキャプチャしている画面に「WPA handshake」と表示されるので確認後にキャプチャを終了する。
+![handshakecapture](https://github.com/RyosukeDTomita/article/blob/master/picture/capture.jpg)
 
 ### キャプチャした4way handshakeのパケットをhashcatを使って複合する。
 
