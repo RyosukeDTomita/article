@@ -47,7 +47,7 @@ sudo apt install ./realtek-rtl88xxau-dkms_5.6.4.2~git20200916-0kali1_all.deb
 ```shell
 sudo iwconfig #wlan0等のネットワークインターフェースカードが表示されればOK
 ```
-![認識の確認]()
+![認識の確認](https://github.com/RyosukeDTomita/article/blob/master/picture/iwconfig.jpg)
 #### virtualboxで立ち上げた仮想OSにWi-Fiモニターを認識させる。
 - VirtualBoxで起動したOSの画面の上部のデバイスタブをクリックして、USB→USBの設定をクリックすると、現在仮想OSが認識しているデバイスのリストが表示される。- 右側のプラスボタンをクリックして、Realtek 802.11n NICを追加する。
 ![手順1](https://github.com/RyosukeDTomita/article/blob/master/picture/vm.jpg)
@@ -85,7 +85,7 @@ sudo airmon-ng check kill #wpa_supplicantをkill
 ```
 ip a
 ```
-- 現在使用しているコンピュータが**有線接続ならば、en**から始まるもの、**Wi-Fi接続ならばwlp**などから始まるものをメモしておく。
+- 現在使用しているコンピュータが**有線接続ならば、en**から始まるもの、**Wi-Fi接続ならばwlp**から始まるものをメモしておく。
 - 筆者の場合にはWi-Fi接続なので、**wlp2s0**である。
 
 #### モニターモードに変更する方法
@@ -139,12 +139,12 @@ sudo airodump-ng wlp2s0mon #周囲のWi-Fi情報を取得する。
 ### パケットをキャプチャする
 - 以下のコマンドを実行することで、パケットをキャプチャが開始される。これには時間がかかるのでしばらく放置するとよい。
 - bssidとchannelは各自のものに置き換える。
+![packet](https://github.com/RyosukeDTomita/article/blob/master/picture/packet.jpg)
 
 ```shell
 sudo airodump-ng --bssid 1E:B1:7F:14:0C:01 --channel 13 --write wep wlp2s0mon
 ```
 #### パケットキャプチャ中の画面の見方
-![packet](https://github.com/RyosukeDTomita/article/blob/master/picture/packet.png)
 - Data: 収集したパケットの量。
 - アクセスしている端末のMACアドレスが下に表示される。
 
