@@ -52,7 +52,7 @@ sudo iwconfig #wlan0等のネットワークインターフェースカードが
 - VirtualBoxで起動したOSの画面の上部のデバイスタブをクリックして、USB→USBの設定をクリックすると、現在仮想OSが認識しているデバイスのリストが表示される。- 右側のプラスボタンをクリックして、Realtek 802.11n NICを追加する。
 ![手順1](https://github.com/RyosukeDTomita/article/blob/master/picture/vm.jpg)
 
-![手順2](https://github.com/RyosukeDTomita/article/blob/master/picture/vm2.png)
+![手順2](https://github.com/RyosukeDTomita/article/blob/master/picture/vm2.jpg)
 ******
 
 
