@@ -16,7 +16,7 @@
 
 ## 必要なもの
 - Wi-Fiルーター(自分のものに限る)他人のWi-Fiルータを勝手に攻撃すると電波法等の法律に違反してしまうため注意!
-![wifi-router](https://github.com/RyosukeDTomita/article/blob/master/picture/router.jpg)
+![wifi-router](https://github.com/RyosukeDTomita/article/blob/master/picture/router.JPG)
 - パソコン。(Kali-linux推奨)
 - Wi-FIアダプタ(モニターモードにできるもの) [動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH](https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)
 
