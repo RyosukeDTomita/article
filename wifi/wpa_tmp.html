@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>wpa.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+ body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+ body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+ body .anchor:focus {
+  outline: none;
+}
+
+ body h1 .octicon-link,
+ body h2 .octicon-link,
+ body h3 .octicon-link,
+ body h4 .octicon-link,
+ body h5 .octicon-link,
+ body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+ body h1:hover .anchor,
+ body h2:hover .anchor,
+ body h3:hover .anchor,
+ body h4:hover .anchor,
+ body h5:hover .anchor,
+ body h6:hover .anchor {
+  text-decoration: none;
+}
+
+ body h1:hover .anchor .octicon-link,
+ body h2:hover .anchor .octicon-link,
+ body h3:hover .anchor .octicon-link,
+ body h4:hover .anchor .octicon-link,
+ body h5:hover .anchor .octicon-link,
+ body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+ body h1:hover .anchor .octicon-link:before,
+ body h2:hover .anchor .octicon-link:before,
+ body h3:hover .anchor .octicon-link:before,
+ body h4:hover .anchor .octicon-link:before,
+ body h5:hover .anchor .octicon-link:before,
+ body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+} body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+ body details {
+  display: block;
+}
+
+ body summary {
+  display: list-item;
+}
+
+ body a {
+  background-color: initial;
+}
+
+ body a:active,
+ body a:hover {
+  outline-width: 0;
+}
+
+ body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+ body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+ body img {
+  border-style: none;
+}
+
+ body code,
+ body kbd,
+ body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+ body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+ body input {
+  font: inherit;
+  margin: 0;
+}
+
+ body input {
+  overflow: visible;
+}
+
+ body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+ body * {
+  box-sizing: border-box;
+}
+
+ body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+ body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+ body a:hover {
+  text-decoration: underline;
+}
+
+ body strong {
+  font-weight: 600;
+}
+
+ body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+ body hr:after,
+ body hr:before {
+  display: table;
+  content: "";
+}
+
+ body hr:after {
+  clear: both;
+}
+
+ body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+ body td,
+ body th {
+  padding: 0;
+}
+
+ body details summary {
+  cursor: pointer;
+}
+
+ body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+ body h1,
+ body h2,
+ body h3,
+ body h4,
+ body h5,
+ body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ body h1 {
+  font-size: 32px;
+}
+
+ body h1,
+ body h2 {
+  font-weight: 600;
+}
+
+ body h2 {
+  font-size: 24px;
+}
+
+ body h3 {
+  font-size: 20px;
+}
+
+ body h3,
+ body h4 {
+  font-weight: 600;
+}
+
+ body h4 {
+  font-size: 16px;
+}
+
+ body h5 {
+  font-size: 14px;
+}
+
+ body h5,
+ body h6 {
+  font-weight: 600;
+}
+
+ body h6 {
+  font-size: 12px;
+}
+
+ body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+ body blockquote {
+  margin: 0;
+}
+
+ body ol,
+ body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ body ol ol,
+ body ul ol {
+  list-style-type: lower-roman;
+}
+
+ body ol ol ol,
+ body ol ul ol,
+ body ul ol ol,
+ body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+ body dd {
+  margin-left: 0;
+}
+
+ body code,
+ body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+ body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ body input::-webkit-inner-spin-button,
+ body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+ body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+ body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+ body .border-0 {
+  border: 0!important;
+}
+
+ body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+ body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+ body .bg-white {
+  background-color: #fff!important;
+}
+
+ body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+ body .text-gray-light {
+  color: #6a737d!important;
+}
+
+ body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+ body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+ body .pl-0 {
+  padding-left: 0!important;
+}
+
+ body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+ body .pl-1 {
+  padding-left: 4px!important;
+}
+
+ body .pl-2 {
+  padding-left: 8px!important;
+}
+
+ body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+ body .pl-3,
+ body .px-3 {
+  padding-left: 16px!important;
+}
+
+ body .px-3 {
+  padding-right: 16px!important;
+}
+
+ body .pl-4 {
+  padding-left: 24px!important;
+}
+
+ body .pl-5 {
+  padding-left: 32px!important;
+}
+
+ body .pl-6 {
+  padding-left: 40px!important;
+}
+
+ body .f6 {
+  font-size: 12px!important;
+}
+
+ body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+ body .text-bold {
+  font-weight: 600!important;
+}
+
+ body .pl-c {
+  color: #6a737d;
+}
+
+ body .pl-c1,
+ body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+ body .pl-e,
+ body .pl-en {
+  color: #6f42c1;
+}
+
+ body .pl-s .pl-s1,
+ body .pl-smi {
+  color: #24292e;
+}
+
+ body .pl-ent {
+  color: #22863a;
+}
+
+ body .pl-k {
+  color: #d73a49;
+}
+
+ body .pl-pds,
+ body .pl-s,
+ body .pl-s .pl-pse .pl-s1,
+ body .pl-sr,
+ body .pl-sr .pl-cce,
+ body .pl-sr .pl-sra,
+ body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+ body .pl-smw,
+ body .pl-v {
+  color: #e36209;
+}
+
+ body .pl-bu {
+  color: #b31d28;
+}
+
+ body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+ body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+ body .pl-c2:before {
+  content: "^M";
+}
+
+ body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+ body .pl-ml {
+  color: #735c0f;
+}
+
+ body .pl-mh,
+ body .pl-mh .pl-en,
+ body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+ body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+ body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+ body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+ body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+ body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+ body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+ body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+ body .pl-ba {
+  color: #586069;
+}
+
+ body .pl-sg {
+  color: #959da5;
+}
+
+ body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+ body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+ body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+ body .my-2 {
+  margin-top: 8px!important;
+}
+
+ body .pl-0 {
+  padding-left: 0!important;
+}
+
+ body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+ body .pl-1 {
+  padding-left: 4px!important;
+}
+
+ body .pl-2 {
+  padding-left: 8px!important;
+}
+
+ body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+ body .pl-3 {
+  padding-left: 16px!important;
+}
+
+ body .pl-4 {
+  padding-left: 24px!important;
+}
+
+ body .pl-5 {
+  padding-left: 32px!important;
+}
+
+ body .pl-6 {
+  padding-left: 40px!important;
+}
+
+ body .pl-7 {
+  padding-left: 48px!important;
+}
+
+ body .pl-8 {
+  padding-left: 64px!important;
+}
+
+ body .pl-9 {
+  padding-left: 80px!important;
+}
+
+ body .pl-10 {
+  padding-left: 96px!important;
+}
+
+ body .pl-11 {
+  padding-left: 112px!important;
+}
+
+ body .pl-12 {
+  padding-left: 128px!important;
+}
+
+ body hr {
+  border-bottom-color: #eee;
+}
+
+ body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+ body:after,
+ body:before {
+  display: table;
+  content: "";
+}
+
+ body:after {
+  clear: both;
+}
+
+ body>:first-child {
+  margin-top: 0!important;
+}
+
+ body>:last-child {
+  margin-bottom: 0!important;
+}
+
+ body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+ body blockquote,
+ body details,
+ body dl,
+ body ol,
+ body p,
+ body pre,
+ body table,
+ body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+ body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+ body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+ body blockquote>:first-child {
+  margin-top: 0;
+}
+
+ body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+ body h1,
+ body h2,
+ body h3,
+ body h4,
+ body h5,
+ body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+ body h1 {
+  font-size: 2em;
+}
+
+ body h1,
+ body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+ body h2 {
+  font-size: 1.5em;
+}
+
+ body h3 {
+  font-size: 1.25em;
+}
+
+ body h4 {
+  font-size: 1em;
+}
+
+ body h5 {
+  font-size: .875em;
+}
+
+ body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+ body ol,
+ body ul {
+  padding-left: 2em;
+}
+
+ body ol ol,
+ body ol ul,
+ body ul ol,
+ body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ body li {
+  word-wrap: break-all;
+}
+
+ body li>p {
+  margin-top: 16px;
+}
+
+ body li+li {
+  margin-top: .25em;
+}
+
+ body dl {
+  padding: 0;
+}
+
+ body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+ body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+ body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+ body table th {
+  font-weight: 600;
+}
+
+ body table td,
+ body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+ body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+ body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+ body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+ body img[align=right] {
+  padding-left: 20px;
+}
+
+ body img[align=left] {
+  padding-right: 20px;
+}
+
+ body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+ body pre {
+  word-wrap: normal;
+}
+
+ body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+ body .highlight {
+  margin-bottom: 16px;
+}
+
+ body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+ body .highlight pre,
+ body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+ body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+ body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+ body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+ body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+ body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+ body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+ body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+ body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+ body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+ body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+ body .pl-token.active,
+ body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+ body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+ body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+ body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+ body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+ body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+ body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+ body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+ body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+ body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+ body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+ body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+ body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+ body .task-list-item {
+  list-style-type: none;
+}
+
+ body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+ body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+</style>
+
+<style>
+/*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #002b36;
+  color: #839496;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #586e75;
+}
+
+/* Solarized Green */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #859900;
+}
+
+/* Solarized Cyan */
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+  color: #2aa198;
+}
+
+/* Solarized Blue */
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #268bd2;
+}
+
+/* Solarized Yellow */
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #b58900;
+}
+
+/* Solarized Orange */
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+  color: #cb4b16;
+}
+
+/* Solarized Red */
+.hljs-built_in,
+.hljs-deletion {
+  color: #dc322f;
+}
+
+.hljs-formula {
+  background: #073642;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="wifihacking">WifiHacking</h1>
+<h2 id="%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83">実行環境</h2>
+<p>本記事では、以下の環境を使って実験を行なった。</p>
+<ul>
+<li>Kali-Linux(Virtual Box)</li>
+<li>Ubuntu20.04</li>
+</ul>
+<h2 id="%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E5%85%A5%E5%8A%9B%E3%81%99%E3%82%8B%E3%81%A8%E3%81%AF">コマンドを入力するとは?</h2>
+<ul>
+<li>昔のコンピュータにはマウスを使って直感的に操作することはできず、コマンド入力によってコンピュータを操作していた。</li>
+<li>コマンドはアプリケーション一覧から、terminal(日本語なら端末)を起動してそこに打ち込む。<img src="file:///home/tomita/article/picture/terminal.png" alt="terminalイメージ"></li>
+</ul>
+<h2 id="%E8%A8%98%E4%BA%8B%E3%81%AE%E8%A6%8B%E6%96%B9">記事の見方</h2>
+<ul>
+<li>今回の記事では、背景の色が変わっている部分はコマンドを入力することを表しているので自分のコンピュータでターミナルを開いてみよう。</li>
+<li>コマンド入力部分で冒頭に#がついているものはコマンドとして実行される命令文ではなく、コメントである。</li>
+</ul>
+<blockquote>
+<p>コメント: 実際の処理には関係なく開発者が後からコードを読む人に向けて残すメモのようなもの。</p>
+</blockquote>
+<h2 id="%E5%BF%85%E8%A6%81%E3%81%AA%E3%82%82%E3%81%AE">必要なもの</h2>
+<ul>
+<li>Wi-Fiルーター(自分のものに限る)他人のWi-Fiルータを勝手に攻撃すると電波法等の法律に違反してしまうため注意!
+<img src="file:///home/tomita/article/picture/router.JPG" alt="wifi-router"></li>
+<li>パソコン。(Kali-linux推奨)</li>
+<li>Wi-FIアダプタ(モニターモードにできるもの) <a href="https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&amp;psc=1">動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH</a></li>
+</ul>
+<h2 id="wi-fi%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%81%AE%E5%88%9D%E6%9C%9F%E8%A8%AD%E5%AE%9A">Wi-Fiアダプタの初期設定</h2>
+<p><a href="https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&amp;psc=1">動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH</a>を使用するにはドライバーをインストールする必要がある。</p>
+<h3 id="awus036ach%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">AWUS036ACHのドライバインストール</h3>
+<p>ALFA AWUS036ACHのドライバーは公式サイトの<a href="https://blog.abysm.org/2020/03/realtek-802-11ac-usb-wi-fi-linux-driver-installation/">ドライバのインストールガイド</a>を見ながらインストールを行う。</p>
+<ul>
+<li>Kali Linuxの場合</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash">kali</span>
+sudo apt update
+sudo apt install realtek-rtl88xxau-dkms
+</div></code></pre>
+<ul>
+<li>Ubuntuの場合はaptから直接インストールできないので<a href="https://blog.abysm.org/2020/03/realtek-802-11ac-usb-wi-fi-linux-driver-installation/">ドライバのインストールガイド</a>からdebファイルをダウンロードした後、apt installにdebファイルを指定してインストールを行う。</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash">ubuntu</span>
+sudo apt update
+sudo apt install ./realtek-rtl88xxau-dkms_5.6.4.2~git20200916-0kali1_all.deb
+</div></code></pre>
+<h3 id="%E8%AA%8D%E8%AD%98%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E7%A2%BA%E8%AA%8D">認識されているか確認</h3>
+<pre class="hljs"><code><div>sudo iwconfig #wlan0等のネットワークインターフェースカードが表示されればOK
+</div></code></pre>
+<p><img src="file:///home/tomita/article/picture/iwconfig.jpg" alt="認識の確認"></p>
+<h4 id="virtualbox%E3%81%A7kali%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">virtualboxでkaliを使用する場合</h4>
+<ul>
+<li>VirturlBoxのkaliでWi-FIアダプタを使用する場合には、仮想OSにデバイスを認識させる必要がある。</li>
+<li>VirtualBoxで起動したOSの画面の上部のデバイスタブをクリックして、USB→USBの設定をクリックすると、現在仮想OSが認識しているデバイスのリストが表示される。- 右側のプラスボタンをクリックして、Realtek 802.11n NICを追加する。
+<img src="file:///home/tomita/article/picture/vm.jpg" alt="手順1"></li>
+</ul>
+<p><img src="file:///home/tomita/article/picture/vm2.jpg" alt="手順2"></p>
+<hr>
+<h3 id="%E9%82%AA%E9%AD%94%E8%80%85%E3%82%92kill%E3%81%93%E3%81%93%E3%81%8B%E3%82%89%E5%AE%9F%E9%9A%9B%E3%81%AB%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%AB%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E5%85%A5%E5%8A%9B%E3%81%97%E3%81%A6%E3%81%84%E3%81%8F">邪魔者をkill(ここから実際にターミナルにコマンドを入力していく)</h3>
+<ul>
+<li>WEP Wi-Fiのハッキングを行う前に邪魔なアプリケーションをkillする必要がある。</li>
+<li>ターミナルを開いて(Application一覧から端末を実行)以下のコマンドを実行する。</li>
+</ul>
+<pre class="hljs"><code><div>sudo airmon-ng check kill #wpa_supplicantをkill
+</div></code></pre>
+<blockquote>
+<p>wpa_suppliment: WPA認証機器との鍵の交渉を実装しており、wlanドライバのローミングやIEEE 802.11認証やアソシエーションを制御している。</p>
+</blockquote>
+<h3 id="wi-fi%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%82%92%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%A2%E3%83%BC%E3%83%89%E5%A4%89%E6%9B%B4">Wi-FIアダプタをモニタモード変更</h3>
+<ul>
+<li>
+<p>Wi-Fiをモニターモードにすることで周囲に漂っている電波をすべて受信できるようになる。(自分宛てじゃないパケットも見れるようになる)</p>
+</li>
+<li>
+<p>Wi-Fiアダプタのモードを変更するには、ネットワークインターフェースカードを指定して実行する必要がある。</p>
+</li>
+<li>
+<p>以下のコマンドを実行することで使用できるネットワークインターフェースカードの一覧等が見られる。</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>ip a
+</div></code></pre>
+<ul>
+<li>現在使用しているコンピュータが<strong>有線接続ならば、en</strong>から始まるもの、<strong>Wi-Fi接続ならばwl</strong>から始まるものをメモしておく。</li>
+<li>筆者の場合にはWi-Fi接続なので、<strong>wlp2s0</strong>であるが、kali linuxをVirtualBoxを使って使用している場合はwlan0である可能性が高い。</li>
+</ul>
+<h4 id="%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">モニターモードに変更する方法</h4>
+<ul>
+<li>airmon-ngを使う方法が簡単だが、環境によってはうまく行かないことがあるので、その場合には手動でやる方法を試してみると良い。</li>
+<li>モニターモードにするとインターネットに接続することができなくなるので注意!</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash">air-mon-ngを使う方法</span>
+sudo apt install aircrack-ng #必要なツールをインストールする。(初回のみ実行すればよい。)
+sudo airmon-ng start wlp2s0 #wlp2s0は先程メモした自身のネットワークインターフェースカードに置き換えること。
+sudo iwconfig #monitorモードになっていればmonitorと表示されているはず。
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash">手動でやる方法</span>
+sudo ip link set wlp2s0 down
+sudo iwconfig wlan0 mode monitor
+sudo ip link set wlp2s0 up
+sudo iwconfig
+</div></code></pre>
+<p><img src="file:///home/tomita/article/picture/monitor.jpg" alt="monitormode"></p>
+<h4 id="%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%E3%83%A2%E3%83%BC%E3%83%89%E3%81%8B%E3%82%89%E5%85%83%E3%81%AB%E6%88%BB%E3%81%99">モニターモードから元に戻す</h4>
+<ul>
+<li>コンピュータを再起動することでモニターモードから抜けられる。ハッキングが終わった後は再起動するのがおすすめ。</li>
+<li>もしくは、airmon-ngをstopしてもよい。</li>
+</ul>
+<pre class="hljs"><code><div>sudo airmon-ng stop wlp2s0mon
+sudo ip link set dev wlp2s0 up
+</div></code></pre>
+<h3 id="%E5%91%A8%E5%9B%B2%E3%81%AEwi-fi%E6%83%85%E5%A0%B1%E3%82%92%E8%A6%8B%E3%82%8B">周囲のWi-Fi情報を見る</h3>
+<ul>
+<li>
+<p>以下のコマンドを実行することで、周囲のWi-Fiを表示することができる。</p>
+</li>
+<li>
+<p>ステルス設定のWi-Fiも表示される。</p>
+</li>
+</ul>
+<blockquote>
+<p>SSIDステルスとは: 無線ルータが自らのSSID</p>
+</blockquote>
+<pre class="hljs"><code><div>sudo airodump-ng wlp2s0mon #周囲のWi-Fi情報を取得する。
+</div></code></pre>
+<ul>
+<li>攻撃対象のwifiを見つけたら、BSSIDとCHをメモする。</li>
+</ul>
+<h4 id="bssid%E3%81%A3%E3%81%A6%E4%BD%95%E3%81%A8%E6%80%9D%E3%81%A3%E3%81%9F%E4%BA%BA%E5%90%91%E3%81%91">BSSIDって何？と思った人向け</h4>
+<ul>
+<li>MACアドレス: Media Access Controlアドレスの略で、ネットワークインターフェースカードごとに割り当てられる物理アドレス。</li>
+<li>BSSID: 無線LANにおける無線ネットワークの識別子。通常はMACアドレスをそのまま用いる。</li>
+<li>CH(チャンネル): CHを指定することは、周波数を合わせることあり、チャンネルを指定することでパケットを取得できるようになる。</li>
+<li>ESSID: 対象のwifi名のこと。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BSSID</td>
+<td>d6:48:8f:65:0c:27</td>
+</tr>
+<tr>
+<td>CH</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%82%92%E3%82%AD%E3%83%A3%E3%83%97%E3%83%81%E3%83%A3%E3%81%99%E3%82%8B">パケットをキャプチャする</h3>
+<ul>
+<li>以下のコマンドを実行することで、パケットをキャプチャが開始される。これには時間がかかるのでしばらく放置するとよい。</li>
+<li>bssidとchannelは各自のものに置き換える。
+<img src="file:///home/tomita/article/picture/packet.jpg" alt="packet"></li>
+</ul>
+<pre class="hljs"><code><div>sudo airodump-ng --bssid 1E:B1:7F:14:0C:01 --channel 13 --write wep wlp2s0mon
+</div></code></pre>
+<h4 id="%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%82%AD%E3%83%A3%E3%83%97%E3%83%81%E3%83%A3%E4%B8%AD%E3%81%AE%E7%94%BB%E9%9D%A2%E3%81%AE%E8%A6%8B%E6%96%B9">パケットキャプチャ中の画面の見方</h4>
+<ul>
+<li>Data: 収集したパケットの量。</li>
+<li>アクセスしている端末のMACアドレスが下に表示される。</li>
+</ul>
+<p><img src="file:///home/tomita/article/picture/packet2.jpg" alt="packet2"></p>
+<h3 id="%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E8%A7%A3%E6%9E%90%E3%82%92%E9%96%8B%E5%A7%8B">パスワード解析を開始</h3>
+<ul>
+<li>一度実行すれば、パケットが溜まったらすぐに実行してくれるので何度も実行しなくていい。</li>
+</ul>
+<pre class="hljs"><code><div>sudo aircrack-ng wep-01.cap wlp2s0mon
+</div></code></pre>
+<ul>
+<li>大きな通信がないとパケットはなかなかたまらないのが実情。</li>
+<li>そこでパケットを貯めるためにARPリクエスト攻撃を行う。</li>
+</ul>
+<hr>
+<h2 id="wpawpa2%E3%81%AE%E3%83%8F%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0">WPA/WPA2のハッキング</h2>
+<h3 id="wpa%E6%96%B9%E5%BC%8F%E3%81%A8%E3%81%AF">WPA方式とは</h3>
+<ul>
+<li>WEPにかわる新しい無線LANの暗号化方式。</li>
+<li>WPAは基本的な暗号方式などをWEPから変更していないため、ファームウェアあるいはドライバを変更する程度でWPAに対応できる。</li>
+<li>WEPと違って、必ずクラックできるわけではない。</li>
+</ul>
+<h3 id="wpa%E3%82%AF%E3%83%A9%E3%83%83%E3%82%AF%E3%81%AE%E6%B5%81%E3%82%8C">WPAクラックの流れ</h3>
+<ol>
+<li>Wi-Fiアダプタをモニターモードにして、パケットを集められる状態にする。</li>
+<li>4 way handshakeを行わせるために、攻撃対象となるアクセスポイントに接続している端末が必要であるため、端末があることを確認する。</li>
+<li>攻撃対象のアクセスポイントと接続している端末の接続を強制的に中断させ、4 way hand shakeを再度行わせそれをキャプチャする。</li>
+<li>パケットをhashcatを使って解析する。</li>
+</ol>
+<h3 id="wpa%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%82%92%E3%82%AF%E3%83%A9%E3%83%83%E3%82%AF%E3%81%99%E3%82%8B">WPAパスワードをクラックする。</h3>
+<h4 id="wifi%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%83%BC%E3%82%92%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AB%E3%81%99%E3%82%8B">Wifiアダプターをモニターモードにする</h4>
+<pre class="hljs"><code><div>sudo airmon-ng check kill #wpa_supplicantをkill
+sudo airmon-ng start wlp2s0 #
+</div></code></pre>
+<h4 id="%E6%94%BB%E6%92%83%E5%AF%BE%E8%B1%A1%E3%81%AEwifi%E3%82%92%E6%8E%A2%E3%81%99">攻撃対象のwifiを探す</h4>
+<pre class="hljs"><code><div>sudo airodump-ng wlp2s0mon
+</div></code></pre>
+<h4 id="4-way-handshake%E3%82%92%E3%82%AD%E3%83%A3%E3%83%97%E3%83%81%E3%83%A3%E3%81%97%E3%81%9F%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%82%92%E5%8F%96%E5%BE%97">4 way handshakeをキャプチャしたパケットを取得</h4>
+<h5 id="%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%82%92%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8C%E3%82%8B%E7%8A%B6%E6%85%8B%E3%81%AB%E3%81%99%E3%82%8B">パケットを受け取れる状態にする。</h5>
+<pre class="hljs"><code><div>sudo airodump-ng -c 1 --bssid 88:57:EE:17:CD:92 -w wpa2 wlp2s0mon #-cでチャンネルを設定
+</div></code></pre>
+<ul>
+<li>このアクセスポイントに接続している端末のMACアドレスが表示されるのでメモする。(ないとこの方法ではクラッキングできない)</li>
+</ul>
+<h5 id="%E7%AB%AF%E6%9C%AB%E3%81%AEwifi%E6%8E%A5%E7%B6%9A%E3%82%92%E5%BC%B7%E5%88%B6%E7%9A%84%E3%81%AB%E5%88%87%E3%82%8B">端末のwifi接続を強制的に切る</h5>
+<ul>
+<li>WPAのクラッキングでは、4 way handshakeという通信を開始する手順で送信されるメッセージ4を止めるてパケットをキャプチャする必要がある。</li>
+<li>すでに接続されている端末では4 way handshakeは行われないので強制的にWiFi接続を外部から解除させて再接続時に行われる4 way handshakeをキャプチャしてパスワードの解析を行う。</li>
+</ul>
+<pre class="hljs"><code><div>sudo aireplay-ng -0 1 -a 88:57:EE:17:CD:92 -c e4:b3:18:bb:ea:1d wlp2s0mon #-0で認証を無効化して引数の数(1)回それを行う。
+</div></code></pre>
+<ul>
+<li>コマンド実行後に少し待つと、自動再接続が行われる。</li>
+<li>4way handshakeをキャプチャするとパケットをキャプチャしている画面に「WPA handshake」と表示されるので確認後にキャプチャを終了する。
+<img src="file:///home/tomita/article/picture/capture.jpg" alt="handshakecapture"></li>
+</ul>
+<h3 id="%E3%82%AD%E3%83%A3%E3%83%97%E3%83%81%E3%83%A3%E3%81%97%E3%81%9F4way-handshake%E3%81%AE%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E3%82%92hashcat%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E8%A4%87%E5%90%88%E3%81%99%E3%82%8B">キャプチャした4way handshakeのパケットをhashcatを使って複合する。</h3>
+<h4 id="cap%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92hashcat%E3%81%8C%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%82%81%E3%82%8B%E5%BD%A2%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B">capファイルをhashcatが読み込める形に変更する</h4>
+<p>capファイルをhashcatが読み取れる形に変換するhxpcapngtoolをインストール。</p>
+<pre class="hljs"><code><div>sudo apt install hcxtools #kali linuxのみうまくいった
+
+hcxpcapngtool --hccapx=hoge wpa2-01.cap # --hcccapx=で出力の名前を決定(このコマンドではhoge)
+</div></code></pre>
+<h4 id="wi-fi%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%83%AA%E3%82%B9%E3%83%88%E3%81%A8%E3%81%AA%E3%82%8B%E8%BE%9E%E6%9B%B8%E7%94%A8%E6%84%8F%E3%81%99%E3%82%8B">Wi-FIパスワードリストとなる辞書用意する。</h4>
+<ul>
+<li><a href="https://github.com/berzerk0/Probable-Wordlists/blob/master/Real-Passwords/WPA-Length/Top4800-WPA-probable-v2.txt">probable-v2-wpa-top4800.txt</a>などが有名らしい。Githubからダウンロード可能。</li>
+<li>defaultのパスワードは桁数も多く、hashcatによって解析することは難しい。</li>
+<li>しかし、ユーザがカスタムしたパスワードであれば脆弱なパスワードが使用されている可能性がある。SSIDがカスタムされている場合にはパスワードも変更されている可能性が高い。</li>
+</ul>
+<h5 id="hashcat%E3%81%AB%E3%82%88%E3%82%8B%E8%A4%87%E5%90%88%E3%82%92%E5%AE%9F%E8%A1%8C">hashcatによる複合を実行</h5>
+<p><a href="'tmp'">hashcatについてはこちら</a></p>
+<pre class="hljs"><code><div>sudo apt install hashcat #install
+hashcat -m 2500 hoge -a 0 password.list #-mでhashタイプをWPA/WPA(2500)に設定 -a 0で辞書攻撃を選択し、使用するpasswordリストのパス(hoge)を指定。
+</div></code></pre>
+<hr>
+<h1 id="%E7%94%A8%E8%AA%9E%E9%9B%86">用語集</h1>
+<h2 id="wep%E6%96%B9%E5%BC%8F%E3%81%A8%E3%81%9D%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">WEP方式とその問題点</h2>
+<p><a href="https://bb.watch.impress.co.jp/cda/bbword/10765.html">WEPについて</a></p>
+<ul>
+<li>WEPでは64bit、128bitの長さを持つ秘密鍵方式だったが、固定パスワードが多くを占め、可変部分(Initializeation Vector)は24bitしかなかった。→IVが抽出しやすい。</li>
+<li>アクセスポイントに接続するユーザは全員同じWEPパスワードを用いる。→長時間サンプリングすることで必要なパケット量がたまりやすい。</li>
+<li>IVを平文で送っていて暗号化していない。</li>
+<li>暗号鍵は<strong>WEPパスワード+IV</strong>で構成される。</li>
+</ul>
+<blockquote>
+<p>IV=可変部分(Initializeation Vector)</p>
+</blockquote>
+<h2 id="wpa%E6%96%B9%E5%BC%8F%E3%81%AEwep%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%89%E6%9B%B4%E7%82%B9">WPA方式のWEPからの変更点</h2>
+<ul>
+<li>鍵の長さを128bitに統一</li>
+<li>IV(可変部分)を48bitに増やす。</li>
+<li>暗号鍵を<strong>WEPパスワード+IV+MACアドレスのハッシュ値</strong>に変更。→推測が難しくなる。</li>
+<li>暗号鍵を1万パケットごとに更新する。→パケットを盗聴されても鍵を割り出す処理が難しくなる。</li>
+</ul>
+<h3 id="wpa%E3%81%AE%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%AD%E3%83%BC%E3%81%AE%E7%94%9F%E6%88%90">WPAのマスターキーの生成</h3>
+<p>WPA2ではマスターキー(MSK)を元に、実際の通信を暗号化する鍵を作成する。</p>
+<ul>
+<li>PMK(Pairwise Master Key): ユニキャスト通信(単一のアドレスを指定して、1対1で行われる通信のこと。)に使用する鍵マスターキーになる。MSKより生成される。</li>
+<li>GMK(Group Master Key): GMKはマルチキャスト、ブロードキャスト通信に使用する鍵の元となる。アクセスポイントがランダムに生成し、一定時間ごとに更新を行う。</li>
+</ul>
+<h4 id="ptkgtk">PTK,GTK</h4>
+<p><a href="https://licensecounter.jp/engineer-voice/blog/articles/20191029__8.html">4 way handshake</a>
+PMK、GMKはあくまでマスターキーであるため、PTKとGTKを用途ごとに生成する。</p>
+<ul>
+<li>PTK(Pairwise Transient Key): PMKより生成するユニキャスト通信を暗号化するための鍵。</li>
+<li>GTK(Group Temporal Key): GMKより生成するマルチキャスト、ブロードキャストを暗号化するための鍵。</li>
+</ul>
+<h5 id="4way-handshake%E3%81%AE%E6%B5%81%E3%82%8C">4way handshakeの流れ</h5>
+<p><a href="https://milestone-of-se.nesuke.com/nw-advanced/nw-security/krack/">KRACKのしくみ</a></p>
+<ol>
+<li>アクセスポイントがランダム値でAuthenticator Nonce(Anonce)を生成しクライアントへ送信する。</li>
+<li>クライアントはランダム値でSupplicant Nonce(SNonce)を生成し、PMK、ANonce、SNonce、アクセスポイントとクライアントのMACアドレスからPTKを生成する。その後SNonceをアクセスポイントに送信する。</li>
+<li>アクセスポイント側でも同様にしてPTKを生成する。(PTKを直接送信せずにお互いが生成しているが同じものを保持できるのがポイント)その後、GMKよりGTKを生成し、GTKをクライアントに送信する。</li>
+<li>クライアントはアクセスポイントへメッセージ4で応答を返し、4Way Handshakeが完了したことを通知する。その後クライアントはPTKとGTKを、アクセスポイントはPTKをインストールし、通信を行うことが可能となる。</li>
+</ol>
+<h4 id="wpa%E3%81%AE%E3%82%AF%E3%83%A9%E3%83%83%E3%82%AF%E3%81%99%E3%82%8B%E4%BB%95%E7%B5%84%E3%81%BF">WPAのクラックする仕組み</h4>
+<ul>
+<li>4 way handshakeの完了通知(メッセージ4)を中間者攻撃により意図的に止める。</li>
+<li>クライアント側では4way handshakeは終了しているので、暗号化された通常の通信が始まる。この時、nonce(Number of once)という一度しか使うべきでない値を使って暗号化が行われる。nonceはパケットごとに異なる番号である。</li>
+<li>アクセスポイントがメッセージ4を受信せずにタイムアウトし、メッセージ3を再送する。</li>
+<li>クライアントはメッセージ3を受け取り、PTKの再インストールが行う。この時、実施した処理の巻き戻しが起こり、nonceのカウントがリセットされる。</li>
+<li>メッセージ3が届くたびに同じnonceを使った通信を行わせることができ、暗号が解読できる。</li>
+</ul>
+
+</body>
+</html>
