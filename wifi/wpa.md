@@ -1,4 +1,4 @@
-# WifiHacking
+# Wi-FiHacking (WPA/WPA2)
 ## 実行環境
 本記事では、以下の環境を使って実験を行なった。
 
@@ -58,7 +58,40 @@ sudo iwconfig #wlan0等のネットワークインターフェースカードが
 
 
 
-### 邪魔者をkill(ここから実際にターミナルにコマンドを入力していく)
+
+
+## WPA/WPA2のハッキング
+### WPA方式とは
+- WEPにかわる新しい無線LANの暗号化方式。
+- WPAは基本的な暗号方式などをWEPから変更していないため、ファームウェアあるいはドライバを変更する程度でWPAに対応できる。
+- WEPと違って、必ずクラックできるわけではない。
+### WEP方式とその問題点
+[WEPについて](https://bb.watch.impress.co.jp/cda/bbword/10765.html)
+- WEPでは64bit、128bitの長さを持つ秘密鍵方式だったが、固定パスワードが多くを占め、可変部分(Initializeation Vector)は24bitしかなかった。WPAに比べてIVが抽出しやすいため、パスワードクラックされやすい。
+- アクセスポイントに接続するユーザは全員同じWEPパスワードを用いる。長時間サンプリングすることで必要なパケット量がたまりやすい。
+- IVを平文で送っていて暗号化していない。
+- 暗号鍵は**WEPパスワード+IV**で構成される。
+
+> IV=可変部分(Initializeation Vector)
+### WPA方式のWEPからの変更点
+- すべての秘密鍵の長さを128bitに統一。
+- IV(可変部分)を24bitから48bitに増やした。
+- 暗号鍵を**WEPパスワード+IV+MACアドレスのハッシュ値**に変更。→推測が難しくなる。
+- 暗号鍵を1万パケットごとに更新する。→パケットを盗聴されても鍵を割り出す処理が難しくなる。
+
+## WPAクラックの流れ
+**今回のクラッキング方法では、既に接続されている端末が存在することが条件である。**
+
+1. Wi-Fiアダプタをモニターモードにして、パケットを集められる状態にする。
+2. 4 way handshakeを行わせるために、攻撃対象となるアクセスポイントに接続している端末が必要であるため、端末があることを確認する。
+3. 攻撃対象のアクセスポイントと接続している端末の接続を強制的に中断させ、4 way hand shakeを再度行わせそれをキャプチャする。
+4. パケットをhashcatを使って解析する。
+
+![WPAクラック](/home/tomita/article/picture/4wayhandshake.png)
+
+
+### 1. Wi-Fiアダプタをモニタモード変更
+#### 邪魔者をkill(ここから実際にターミナルにコマンドを入力していく)
 - WEP Wi-Fiのハッキングを行う前に邪魔なアプリケーションをkillする必要がある。
 - ターミナルを開いて(Application一覧から端末を実行)以下のコマンドを実行する。
 
@@ -66,7 +99,7 @@ sudo iwconfig #wlan0等のネットワークインターフェースカードが
 sudo airmon-ng check kill #wpa_supplicantをkill
 ```
 > wpa_suppliment: WPA認証機器との鍵の交渉を実装しており、wlanドライバのローミングやIEEE 802.11認証やアソシエーションを制御している。
-### Wi-FIアダプタをモニタモード変更
+#### モニターモードとは
 - Wi-Fiをモニターモードにすることで周囲に漂っている電波をすべて受信できるようになる。(自分宛てじゃないパケットも見れるようになる)
 - Wi-Fiアダプタのモードを変更するには、ネットワークインターフェースカードを指定して実行する必要がある。
 
@@ -106,98 +139,53 @@ sudo airmon-ng stop wlp2s0mon
 sudo ip link set dev wlp2s0 up
 ```
 
-### 周囲のWi-Fi情報を見る
+#### 周囲のWi-Fi情報を見る
 - 以下のコマンドを実行することで、周囲のWi-Fiを表示することができる。
 
 - ステルス設定のWi-Fiも表示される。
-> SSIDステルスとは: 無線ルータが自らのSSID
+> SSIDステルスとは: 無線ルータが自らのSSIDを発信するためのビーコン信号を停止して、SSID一覧から見えなくすること。
 
 ```shell
 sudo airodump-ng wlp2s0mon #周囲のWi-Fi情報を取得する。
 ```
-- 攻撃対象のwifiを見つけたら、BSSIDとCHをメモする。
+- 攻撃対象とするアクセスポイントには既に他の端末が接続されていることが必要となる。ここでその端末のMACアドレスをメモする。
+![アクセスポイントに接続している端末](/home/tomita/article/picture/alreadyconnect.png)
 
-#### BSSIDって何？と思った人向け
+```
+#こんな感じでメモしよう(これはコマンドじゃないよ)
+BSSID→ d6:48:8f:65:0c:27
+CH→5
+接続済み端末のMACアドレス→6b:6a:b4:b2:6f:be
+```
+##### BSSIDって何？と思った人向け
 - MACアドレス: Media Access Controlアドレスの略で、ネットワークインターフェースカードごとに割り当てられる物理アドレス。
 - BSSID: 無線LANにおける無線ネットワークの識別子。通常はMACアドレスをそのまま用いる。
 - CH(チャンネル): CHを指定することは、周波数を合わせることあり、チャンネルを指定することでパケットを取得できるようになる。
 - ESSID: 対象のwifi名のこと。
 
-|     |                 |
-|-----|-----------------|
-|BSSID|d6:48:8f:65:0c:27|
-|CH   |5                |
-
-### パケットをキャプチャする
-- 以下のコマンドを実行することで、パケットをキャプチャが開始される。これには時間がかかるのでしばらく放置するとよい。
-- bssidとchannelは各自のものに置き換える。
-![packet](/home/tomita/article/picture/packet.jpg)
+### 2. 4 way handshakeキャプチャできる状態にする
 
 ```shell
-sudo airodump-ng --bssid 1E:B1:7F:14:0C:01 --channel 13 --write wep wlp2s0mon
+sudo airodump-ng -c 5 --bssid d6:48:8f:65:0c:27 -w wpa2 wlp2s0mon #-cでチャンネルを設定
 ```
-#### パケットキャプチャ中の画面の見方
-- Data: 収集したパケットの量。
-- アクセスしている端末のMACアドレスが下に表示される。
-
-![packet2](/home/tomita/article/picture/packet2.jpg)
-### パスワード解析を開始
-- 一度実行すれば、パケットが溜まったらすぐに実行してくれるので何度も実行しなくていい。
-
-```shell
-sudo aircrack-ng wep-01.cap wlp2s0mon
-```
-- 大きな通信がないとパケットはなかなかたまらないのが実情。
-- そこでパケットを貯めるためにARPリクエスト攻撃を行う。
-******
-
-
-## WPA/WPA2のハッキング
-### WPA方式とは
-- WEPにかわる新しい無線LANの暗号化方式。
-- WPAは基本的な暗号方式などをWEPから変更していないため、ファームウェアあるいはドライバを変更する程度でWPAに対応できる。
-- WEPと違って、必ずクラックできるわけではない。
-### WPAクラックの流れ
-1. Wi-Fiアダプタをモニターモードにして、パケットを集められる状態にする。
-2. 4 way handshakeを行わせるために、攻撃対象となるアクセスポイントに接続している端末が必要であるため、端末があることを確認する。
-3. 攻撃対象のアクセスポイントと接続している端末の接続を強制的に中断させ、4 way hand shakeを再度行わせそれをキャプチャする。
-4. パケットをhashcatを使って解析する。
-
-
-### WPAパスワードをクラックする。
-#### Wifiアダプターをモニターモードにする
-
-```shell
-sudo airmon-ng check kill #wpa_supplicantをkill
-sudo airmon-ng start wlp2s0 #
-```
-#### 攻撃対象のwifiを探す
-
-```shell
-sudo airodump-ng wlp2s0mon
-```
-#### 4 way handshakeをキャプチャしたパケットを取得
-##### パケットを受け取れる状態にする。
-
-```shell
-sudo airodump-ng -c 1 --bssid 88:57:EE:17:CD:92 -w wpa2 wlp2s0mon #-cでチャンネルを設定
-```
-- このアクセスポイントに接続している端末のMACアドレスが表示されるのでメモする。(ないとこの方法ではクラッキングできない)
-##### 端末のwifi接続を強制的に切る
+### 3. 端末のwifi接続を強制的に切り、4 way handshakeをキャプチャする
 - WPAのクラッキングでは、4 way handshakeという通信を開始する手順で送信されるメッセージ4を止めるてパケットをキャプチャする必要がある。
 - すでに接続されている端末では4 way handshakeは行われないので強制的にWiFi接続を外部から解除させて再接続時に行われる4 way handshakeをキャプチャしてパスワードの解析を行う。
 
+#### すでに接続されている端末の接続を強制的に切る。
+
 ```shell
-sudo aireplay-ng -0 1 -a 88:57:EE:17:CD:92 -c e4:b3:18:bb:ea:1d wlp2s0mon #-0で認証を無効化して引数の数(1)回それを行う。
+sudo aireplay-ng -0 1 -a <BSSID> -c <接続済み端末のMACアドレス> wlp2s0mon #-0で認証を無効化して引数の数(1)回それを行う。
 ```
 - コマンド実行後に少し待つと、自動再接続が行われる。
 - 4way handshakeをキャプチャするとパケットをキャプチャしている画面に「WPA handshake」と表示されるので確認後にキャプチャを終了する。
 ![handshakecapture](/home/tomita/article/picture/capture.jpg)
 
-### キャプチャした4way handshakeのパケットをhashcatを使って複合する。
+
+### 4. キャプチャした4way handshakeのパケットをhashcatを使って複合する。
 
 #### capファイルをhashcatが読み込める形に変更する
-capファイルをhashcatが読み取れる形に変換するhxpcapngtoolをインストール。
+capファイルをhashcatが読み取れる形に変換するhxpcapngtoolを使用する。これはUbuntuではうまくインストールできなかったのでkali-linuxでインストールを行い、変換を行った。
 
 ```shell
 sudo apt install hcxtools #kali linuxのみうまくいった
@@ -206,59 +194,24 @@ hcxpcapngtool --hccapx=hoge wpa2-01.cap # --hcccapx=で出力の名前を決定(
 ```
 
 #### Wi-FIパスワードリストとなる辞書用意する。
-- [probable-v2-wpa-top4800.txt](https://github.com/berzerk0/Probable-Wordlists/blob/master/Real-Passwords/WPA-Length/Top4800-WPA-probable-v2.txt)などが有名らしい。Githubからダウンロード可能。
 - defaultのパスワードは桁数も多く、hashcatによって解析することは難しい。
-- しかし、ユーザがカスタムしたパスワードであれば脆弱なパスワードが使用されている可能性がある。SSIDがカスタムされている場合にはパスワードも変更されている可能性が高い。
+- しかし、ユーザがカスタムしたパスワードであれば脆弱なパスワードが使用されている可能性がある。カスタムされたパスワードが使用されているアクセスポイントはSSIDもデフォルトから変更されている場合が多い。
+- [probable-v2-wpa-top4800.txt](https://github.com/berzerk0/Probable-Wordlists/blob/master/Real-Passwords/WPA-Length/Top4800-WPA-probable-v2.txt)などが有名らしい。Githubからダウンロード可能。
 
-##### hashcatによる複合を実行
-[hashcatについてはこちら]('tmp')
+#### hashcatによる複合を実行
+最後に変換したcapファイルをhashcatを使って複合することでパスワードを解析する。
+[hashcat]('tmp')についてはこちらを参照してください。
 
 ```shell
 sudo apt install hashcat #install
 hashcat -m 2500 hoge -a 0 password.list #-mでhashタイプをWPA/WPA(2500)に設定 -a 0で辞書攻撃を選択し、使用するpasswordリストのパス(hoge)を指定。
 ```
 
+### 最後に
+- 本記事は情報セキュリティ技術の教育普及活動を目的に作成されたものであり、サイバー攻撃を助長する目的で作成されたものではありません。
+- 本記事で紹介したコマンドを、他人のWi-Fiに対して使用すると電波法等の法律に違反するおそれがあり、筆者はそれに対しての責任は負いません。
+- ルールを守って楽しいハッキングを心掛けましょう。
 ******
-# 用語集
-
-## WEP方式とその問題点
-[WEPについて](https://bb.watch.impress.co.jp/cda/bbword/10765.html)
-- WEPでは64bit、128bitの長さを持つ秘密鍵方式だったが、固定パスワードが多くを占め、可変部分(Initializeation Vector)は24bitしかなかった。→IVが抽出しやすい。
-- アクセスポイントに接続するユーザは全員同じWEPパスワードを用いる。→長時間サンプリングすることで必要なパケット量がたまりやすい。
-- IVを平文で送っていて暗号化していない。
-- 暗号鍵は**WEPパスワード+IV**で構成される。
-
-> IV=可変部分(Initializeation Vector)
 
 
-## WPA方式のWEPからの変更点
-- 鍵の長さを128bitに統一
-- IV(可変部分)を48bitに増やす。
-- 暗号鍵を**WEPパスワード+IV+MACアドレスのハッシュ値**に変更。→推測が難しくなる。
-- 暗号鍵を1万パケットごとに更新する。→パケットを盗聴されても鍵を割り出す処理が難しくなる。
-
-
-### WPAのマスターキーの生成
-WPA2ではマスターキー(MSK)を元に、実際の通信を暗号化する鍵を作成する。
-- PMK(Pairwise Master Key): ユニキャスト通信(単一のアドレスを指定して、1対1で行われる通信のこと。)に使用する鍵マスターキーになる。MSKより生成される。
-- GMK(Group Master Key): GMKはマルチキャスト、ブロードキャスト通信に使用する鍵の元となる。アクセスポイントがランダムに生成し、一定時間ごとに更新を行う。
-#### PTK,GTK
-[4 way handshake](https://licensecounter.jp/engineer-voice/blog/articles/20191029__8.html)
-PMK、GMKはあくまでマスターキーであるため、PTKとGTKを用途ごとに生成する。
-
-- PTK(Pairwise Transient Key): PMKより生成するユニキャスト通信を暗号化するための鍵。
-- GTK(Group Temporal Key): GMKより生成するマルチキャスト、ブロードキャストを暗号化するための鍵。
-##### 4way handshakeの流れ
-[KRACKのしくみ](https://milestone-of-se.nesuke.com/nw-advanced/nw-security/krack/)
-1. アクセスポイントがランダム値でAuthenticator Nonce(Anonce)を生成しクライアントへ送信する。
-2. クライアントはランダム値でSupplicant Nonce(SNonce)を生成し、PMK、ANonce、SNonce、アクセスポイントとクライアントのMACアドレスからPTKを生成する。その後SNonceをアクセスポイントに送信する。
-3. アクセスポイント側でも同様にしてPTKを生成する。(PTKを直接送信せずにお互いが生成しているが同じものを保持できるのがポイント)その後、GMKよりGTKを生成し、GTKをクライアントに送信する。
-4. クライアントはアクセスポイントへメッセージ4で応答を返し、4Way Handshakeが完了したことを通知する。その後クライアントはPTKとGTKを、アクセスポイントはPTKをインストールし、通信を行うことが可能となる。
-
-#### WPAのクラックする仕組み
-- 4 way handshakeの完了通知(メッセージ4)を中間者攻撃により意図的に止める。
-- クライアント側では4way handshakeは終了しているので、暗号化された通常の通信が始まる。この時、nonce(Number of once)という一度しか使うべきでない値を使って暗号化が行われる。nonceはパケットごとに異なる番号である。
-- アクセスポイントがメッセージ4を受信せずにタイムアウトし、メッセージ3を再送する。
-- クライアントはメッセージ3を受け取り、PTKの再インストールが行う。この時、実施した処理の巻き戻しが起こり、nonceのカウントがリセットされる。
-- メッセージ3が届くたびに同じnonceを使った通信を行わせることができ、暗号が解読できる。
 

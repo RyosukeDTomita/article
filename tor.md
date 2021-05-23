@@ -1,111 +1,85 @@
 # Tor使い方ガイド
+## 元動画
+この記事は、[ネット匿名化 Torの仕組みと使い方・インストール・高速化・reCAPTUREの回避](https://www.youtube.com/watch?v=RPNWQUx7xrE)に加筆したものです。
 ## vpn vs proxy
 ### VPN
 - Virtual Private Networkの略。
-- 通信のすべてを暗号化して情報をやりとりする方法。
-- 組織の外から組織のリソースにアクセスするのが目的。
-- 仮想的にLANとつながっている状態になる。
+- 自分の外から見えるipアドレスがvpnサーバーのipアドレスに変わる。
+- LAN外から仮想的にLANとつながっている状態にすることができる。
+- リモートワークをするために、自宅から会社のLAN内に入りssh等を使って会社のパソコンにアクセスするなどに使われる。
+- また、フリーwifiを使う際に通信を盗聴されないようにvpnを使うのが推奨されている。
+vpnを使わない通信であればLAN内で通信が直接行われるので暗号化されていない通信は盗聴することができるが、vpnを使った通信を盗聴した場合にはvpnとの通信しか盗聴することができない。
 
 ### proxy
-- VPN同様にユーザと訪問先を仲介する。
-- 代理でアクセスするため、すべてが暗号化されるわけではない。
-- 暗号化の対象はブラウザのみ。
+- 代理でアクセスすることを目的としているため、自分のipアドレスを隠して通信ができる。
 
 ## Torとは
-Torとはproxyの1つであり、ネットワークの**接続経路を匿名化して、接続元の特定を困難にする**ソフトウェアである。→通信に複数のノード(中継地点)を経由しているため。
+Torとはproxyの1つであり、ネットワークの**接続経路を匿名化して、接続元の特定を困難にする**ソフトウェアである。通信に複数のノード(中継地点)を経由しているため。
 
 ## 発信者特定の仕組み
 ここでは、誹謗中傷をしたユーザを特定する流れを簡単に解説する。
 1. 掲示板で誹謗中傷されているのを見つける。
 2. 誹謗中傷を行なったユーザのIPアドレスを掲示板に開示してもらう。
 3. IPアドレスからどのプロバイダの回線を使っているか調べる。
-4. プロバイダからIPアドレスを使っている契約情報を聞き出し、誹謗中傷を行なったユーザの住所等を手に入れる。
+4. プロバイダからIPアドレスを使っている契約情報を聞き出し、誹謗中傷を行なったユーザの住所等を手に入れる。**誰が書き込みしたか判明**
 
-プロバイダとは: OCN光やSo-net光のように回線(NTTやSo-net等の回線業者によって提供されている)とインターネットをつなげる接続事業者のこと。
+![手順1](/home/tomita/article/picture/hibou.png)
+![手順2](/home/tomita/article/picture/ipget.png)
+![手順3](/home/tomita/article/picture/provider.png)
+![手順4](/home/tomita/article/picture/iptoprovider.png)
+> プロバイダとは: OCN光やSo-net光のように回線(NTTやSo-net等の回線業者によって提供されている)とインターネットをつなげる接続事業者のこと。
 ### なぜ、Torは発信者を特定しにくくするのか?
 Torは3つの中継地点を経由して目的のウェブサイトに到達するようになっており、中継地点ごとにIPアドレスが変わるようになっている。
 そのため、発信者が中継地点を通るたびにIPアドレスが変わる。→開示請求をなんども行わなければならない。
 特に、海外のサーバに対してプロバイダ開示請求を行なっても、無視されたり開示請求までに時間がかかりログが消失してしまう可能性もある。
+![tor](/home/tomita/article/picture/tor.png)
+******
 
-## Torブラウザのインストール
-1. [Torproject.org](torproject.org)にアクセス
-以降の手順を詳しく書く。
+
+## Torブラウザのダウンロード
+Torブラウザとは**Torを組み込んでカスタマイズされたFirefoxブラウザ**である。
+
+1. [Torproject.org](https://www.torproject.org/)にアクセス
+2. [Download Tor Browser](https://www.torproject.org/download/)をクリック
+3. 自分のOSにあったTor Browserをクリックしてダウンロードする。デフォルトでは英語版がダウンロードされるため、[Download in another language or platform](https://www.torproject.org/download/languages/)をクリックして日本語の列を探せば日本語版がダウンロードできる。
+![Tor対応OS](/home/tomita/article/picture/torOS.png)
+4. Tor Browserのインストーラーがダウンロードされているので起動してインストールを選択する。
+5. インストールが完了したら起動する。
 
 ### IPアドレスを確かめる。
-
+- [ipinfo.io/json](https://ipinfo.io/json)にアクセスすると現在のIPアドレスやアクセスしている国や地域が確認できる。
+- 鍵マークをクリックすると、どこのリレーノードを通ってアクセスしているかを表示できる。
+![Torリレーノード](/home/tomita/article/torcircuit.png)
+#### wiresharkを使ってパケットを確認する。
+私の場合は、This browser、46.166.161.79、185.117.82.68、176.123.7.102、ipinfo.ioという順のリレーノードとなっています。
+wiresharkを使うと自分のパソコン(local ip)と最初に接続しているリレーノードの通信のパケットを見てみます。
+[wiresharkについてはこちら](tmp)
+1. wiresharkを起動して、パケットキャプチャを開始。
+2. Torブラウザで開いているipinfo.ioのページを更新する。
+3. wiresharkによるパケットキャプチャを止める。
+4. フィルター(検索欄)にip.addr == 46.166.161.79と入力して検索する。
+リレーノードの入り口との通信を見ることができました。
+[wiresharkによるパケットキャプチャ](/home/tomita/article/picture/wireshak1.png)
+Torのクライアントやノード間は暗号化されているから盗聴されないが、Exitノード(リレーノードの終わりのノードで今回でいうと176.123.7.102)は暗号化されていない通信の場合は盗聴の恐れがあるので注意が必要。
 ### torrc編集してtorの設定を変更する
+- Torブラウザのデフォルト設定ではかなり遅い。
+- torの設定を編集するにはtorrcというファイルを編集することで設定ができる。
+- tor_Browserの場合はtor_browser/Browser/TorBrowser/Data/Tor/torrcにある。
 
-
-
-## torの詳しい解説
-- ユーザはローカルにSOCKSプロキシ(オニオンプロキシ)立てて、プロキシ経由の通信を行う。
-- 接続経路を匿名化するものであり、通信内容の秘匿を保証しているわけではない。
-- [tor install guice](https://linuxconfig.org/install-tor-on-ubuntu-18-04-bionic-beaver-linux)
-- ubuntuならaptでインストールできる。
-- ssコマンドは、ネットワーク通信で利用するソケットについての情報などを出力するコマンド。
-- ソケットとは:プログラムとネットワークをつなげる接続口のことを指す場合と、プログラムでネットワーク通信部分を担当する部分という2つの意味がある。
+#### リレーサーキットのノードをすべて日本国内のものにする。
+torrcに以下を追加します。
 
 ```
-ss -nlt #ssコマンドを使ってTorで使用されている9050番ポートのリクエストを確認。
--t, --tcp           display only TCP sockets
--l, --listening     display listening sockets
--n, --numeric       don't resolve service names
+EntryNodes {jp}
+MiddleNodes {jp}
+ExitNodes {jp}
 ```
+すると、リレーサーキットがすべて日本国内になり、快適なブラウジングができるようになる。
+しかし、これはtorとしては脆弱な設定であり、開示請求ができてしまうのが注意点。
 
-### Torが使われているか確認
-
-- Torを経由した外部IPアドレスを確認する
-
-```
-wget -qO - https://api.ipify.org; echo #外部IPアドレス
-torsockes wget -qO - https://api.ipify.org; echo  #Torを経由した外部IPアドレスを確認する。
-```
-> -qは過程を出力しない、O -はファイルとして出力して結果をSTDOUTに出力する。
-
-### Torを起動,終了
-
-```
-source torsocks on  #tor起動
-source torsocks off #tor終了
-```
-> torではなぜ動かないのか？→torがすでに実行されているから。
-
-```
-sudo killall tor
-```
-
-### torの確実性とは
-[Torをつかって個人情報をコントロール](https://qiita.com/syui/items/ebd6734a8102c7906cc1)
-- torを起動してもすべてのアプリが自動でTor経由になるわけではない。
-- 通常は個々のアプリに対してtorをつかう設定をしなければならない。
-- socksプロトコルに対応していないコマンドを使うにはproxychainsという独自のプロキシ経由でコマンドを実行するツールを使う。
-- proxychainsを使う際には**一度torsocksをオフ**にする必要がある
-- proxychainsの設定ファイルは/etc/proxychains.confにあり、デフォルトはtorの9050番ポートが指定されている。
-
-```
-sudo apt install proxychains
-proxychains youtube-dl $URL
-```
-
-### 外部と通信するコマンドが使う環境変数
-
-```
-export http_proxy=socks5://127.0.0.1:9050
-export https_proxy=$http_proxy
-export ftp_proxy=$http_proxy
-export rsync_proxy=$http_proxy
-export HTTP_PROXY=$http_proxy
-export HTTPS_PROXY=$http_proxy
-export FTP_PROXY=$http_proxy
-export RSYNC_PROXY=$http_proxy
-```
-
-
-### torrc
-- torの場合は/etc/tor/torrc
-- tor_Browserの場合は/home/tomita/app/tor_browser/Browser/TorBrowser/Data/Tor/torrc
-- UseEntryGuards 0|1 : 1にすると、長期的なエントリーサーバをいくつか選び、それらに固執する。絶えずサーバを変更すると、サーバを所有する敵対者があなたのパスののごく一部を監視する確立が高くなるので望ましい。
-- NumEntryGuards: 長期的なエントリーサーバに使う数を指定する。
+#### 安全な国のノードだけを通るようにする設定
+あなたが、エドワード・スノーデンのように世界レベルの内部告発をする予定があるなら、14-Eyesの監視から逃れる必要がある。
+そのため、自分の国と14-Eyesのノードをリレーサーキットに含まない設定がこちら。
 
 ```
 # 14-Eyesと自分の国のノードを通さないようにする。
@@ -114,37 +88,41 @@ ExcludeNodes {jp},{us},{gb},{ca},{au},{nz},{dk},{fr},{nl},{no},{de},{be},{it},{e
 ExcludeExitNodes {jp},{us},{gb},{ca},{au},{nz},{dk},{fr},{nl},{no},{de},{be},{it},{es},{il},{sg},{kr},{se},{bg},{cz},{fi},{hu},{ie},{lv},{lt},{lu},{ro},{se},{ch},{ru},{hk},127.0.0.1
 #1の場合は絶対に指定した国のノードに設定しない
 StrictNodes 1
-# 長期的な回路の個数を指定
-NumEntryGuards 4
 ```
-#### 日本のノードだけを使って高速でtorを使用
-
-```
-EntryNodes {jp}
-MiddleNodes {jp}
-ExitNodes {jp}
-```
-
-
-### firefoxでtorを使う
-設定→ネットワークの設定→ManulalProxyconfiguration→9050port→SOCKS Hostをlocalhostに
-> localhostは自身を表すホスト名。送信元に戻ってくる電子信号であるループバック機能をもち、自らがネットワーク上で提供しているサーバ機能などに自分でアクセスする際などに使われる。
->IPV4では127.0.0.1を表す。
-
-### torへの対策
-- IP開示請求は裁判所を介さなくてもできる。→法的拘束力がないので裁判所を介さないと応じられない。
-- Firefox17の脆弱性を利用。
-- 出口ノードのサーバをハニーポットにする。出口ノードでマルウェアを仕込まれる可能性。
-- Tor出口ノードのIPは公開されている。これをブロックすることは可能。
+ただし、ブラウジングはすこぶる遅い。
 ******
+
+### torのExitNodeの一覧
+TorのExit Nodeの一覧は[こちら](https://check.torproject.org/exit-addresses)
+
+```shell
+# コマンドラインからExit Node一覧を見る
+curl https://check.torproject.org/exit-addresses | grep ExitAddress
+
+ExitAddress 51.195.166.197 2021-05-23 09:33:14
+ExitAddress 31.220.0.10 2021-05-23 07:22:07
+ExitAddress 96.66.15.152 2021-05-23 09:23:11
+# Exit Nodeの数を確認
+curl -s https://check.torproject.org/exit-addresses | grep ExitAddress | wc -l
+```
+### reCAPTURE画面を回避する。
+TorのExit NodeのIPアドレスは公開されていて一部のサービスではブロックされている。
+![recapture](/home/tomita/article/picture/recapture.png)
+- ブラウジングに使う検索エンジンにgoogleではなく、yahooを使えば検索結果は同じまま、reCAPTUREを回避できる。
 
 
 ## torを使ってサイトを公開する方法
+### 元動画
+[ハッキング霊夢配信](https://www.youtube.com/watch?v=D5kjxqO0c7E&list=PL6Cp7Rl8AiCWnfp0Epg_5sY6eO-dogWkg)の一部分の内容を記事化しました。
 ### 公開するサイトを準備
+- ディレクトリを作成
 
 ```
-mkdir www ; cd www
-cat index.html
+mkdir html ; cd html
+```
+- index.htmlを作成する。サンプルなので最低限のindex.htmlを作成した。
+
+```html:index.html
 <html>
     <head>
         <title></title>
@@ -155,25 +133,48 @@ cat index.html
     <body>
 </html>
 ```
+- pythonのSimpleHTTPServerという機能を使ってwebサーバを立ち上げる。
+- python3の場合はhttp.serverに統合されている。
 
+```shell
+python -m SimpleHTTPServer #python2系
+python3 -m http.server #python3系
 ```
-python -m SimpleHTTPServer #Webサーバを準備
-```
-- ブラウザを開き、127.0.0.1:8080を検索してサイトが表示できることを確認。
+ブラウザを開きサイトが表示できるか確認する。
+- python2系の場合は、127.0.0.1:8080を検索してサイトが表示できることを確認。
+- python3系の場合は、http://0.0.0.0:8000/を検索してサイトが表示できることを確認できる。
+
 ### torを使ってサイトを公開
-- onion_serviceディレクトリの作成。
-- onion_service.torrcを作成。
+#### torをインストール
+
+```shell
+sudo apt install tor
+```
+#### onion_serviceディレクトリの作成。
+
+```shell
+mkdir onion_service
+chmod 700 onion_service #ディレクトリを自分以外から見えなくする。
+```
+
+#### onion_service.torrcを作成。
 
 ```
-#onios_service_torrc
-HiddenServiceDir /home/tomita/tmp/www/onion_service
+# python2系
+HiddenServiceDir /home/tomita/tmp/onion_service
 HiddenServicePort 80 127.0.0.1:8000 #ローカルループバックアドレス。このPC上の8000番portに80から来た通信を流す。
 ```
-- onion_serviceのパーミションを700に指定
-- 動いているtorプロセスをkillする
 
 ```
-chmod 700 ../onion_service
+#python3系
+HiddenServiceDir /home/tomita/tmp/onion_service
+HiddenServicePort 80 0.0.0.0:8000
+```
+
+#### 動いているtorプロセスをkillする
+torが既に起動されているとエラーが起きる場合があるのでtorプロセスをすべてkillする。
+
+```
 sudo killall tor
 ```
 
@@ -181,10 +182,56 @@ sudo killall tor
 - pythonによってWebサイトが事前に立ち上げられている必要がある。
 
 ```
-cd tmp/www
+cd tmp/html
+python -m SimpleHTTPServer #python2系
+python3 -m http.server #python3系
 tor -f ../onion_service.torrc
 ```
-- ../onion_service/hostnameにダークウェブ上でのURLが作成されているのでこれをtorブラウザで検索するとサイトが確認できる。
+- ../onion_service/hostnameにダークウェブ上でのURLが作成されている。
+- Troブラウザを立ち上げてそのURLを入力するとサイトにアクセスできる。
+![Website](/home/tomita/article/picture/onionsite.png)
+******
+
+
+## 「Tor over VPN」と「VPN over Tor」
+### Tor over VPN
+![Tor over VPN](/home/tomita/article/picture/ToroverVPN.PNG)
+- VPNを接続したパソコンでTorを使う。
+- TorのEntry guard(入り口)にIPアドレスを知られない。
+- ISP(回線業者)にTorを使用していることがばれない。
+- VPNサービスを使用した機器でTorを使うことでTor over VPNは実現できる。
+
+### VPN over Tor
+![VPN over Tor](/home/tomita/article/picture/VPNoverTor.PNG)
+- VPN接続する際のIPアドレスがTorの出口ノード
+- 身元の特定はより難しくなる。
+- Whonixを使ったり、TailsやParrotのような
+### Whonixを使う
+Whonixは仮想マシン内で使用するOSで、仮想マシン内の通信をすべてTorによって匿名化することができる。
+#### メリット
+Torを介した通信のみが許可されるので、ソフトやアプリケーションごとにTorを使うように設定しなくてよい。
+#### 使用した環境
+- ホストOS: Windows10
+- 仮想OS: Ubuntu20.04
+- VirtualBox6.1
+#### Whonixのインストール
+- [Whonix Download Page](https://www.whonix.org/wiki/Download)からWhonixのダウンロードする。
+- VirtualBoxを立ち上げ、新規→仮想アプライアンスのインポート→からダウンロードしたWhonixをインポートする。
+
+インポートが成功するとWhonix GatewayとWhonix Workstationの2つの仮想OSが作成される。
+これらを接続
+> Whonix Gateway:Torによるインターネットの接続環境を提供する。
+
+> Whonix Workstation: Gatewayによって構築されたネットワークのみを経由してインターネットに接続する。
+
+#### Ubuntu20.04側の設定
+設定を開いてネットワークを以下のように設定する。
+
+|             |             |             |             |
+|-------------|-------------|-------------|-------------|
+|Address      |Netmask      |Gateway      |DNS          |
+|10.152.152.50|255.255.192.0|10.152.152.10|10.152.152.10|           |
+
 
 
 

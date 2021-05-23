@@ -5,3 +5,5 @@
 - IPOE →専有IPアドレス
 - PPPOP
 - Github
+jsファイルの実行ファイル jスクリプト:wq
+

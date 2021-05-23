@@ -1,4 +1,4 @@
-# WifiHacking
+# Wi-FiHacking
 ## 実行環境
 本記事では、以下の環境を使って実験を行なった。
 
@@ -15,7 +15,7 @@
 
 ## 必要なもの
 - Wi-Fiルーター(自分のものに限る)他人のWi-Fiルータを勝手に攻撃すると電波法等の法律に違反してしまうため注意!
-![wifi-router](/home/tomita/article/picture/router.JPG)
+![wi-Fi-router](/home/tomita/article/picture/router.JPG)
 - パソコン。(Kali-linux推奨)
 - Wi-FIアダプタ(モニターモードにできるもの) [動画内で紹介されているWi-Fiアダプタ ALFA AWUS036ACH](https://www.amazon.co.jp/gp/product/B07Q5NRYBP/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)
 
@@ -76,7 +76,7 @@ sudo iwconfig #wlan0等のネットワークインターフェースカードが
 sudo airmon-ng check kill #wpa_supplicantをkill
 ```
 > wpa_suppliment: WPA認証機器との鍵の交渉を実装しており、wlanドライバのローミングやIEEE 802.11認証やアソシエーションを制御している。
-### Wi-FIアダプタをモニタモード変更
+### Wi-Fiアダプタをモニタモード変更
 - Wi-Fiをモニターモードにすることで周囲に漂っている電波をすべて受信できるようになる。(自分宛てじゃないパケットも見れるようになる)
 - Wi-Fiアダプタのモードを変更するには、ネットワークインターフェースカードを指定して実行する必要がある。
 
@@ -120,12 +120,12 @@ sudo ip link set dev wlan0 up
 - 以下のコマンドを実行することで、周囲のWi-Fiを表示することができる。
 
 - ステルス設定のWi-Fiも表示される。
-> SSIDステルスとは: 無線ルータが自らのSSID
+> SSIDステルスとは: 無線ルータが自らのSSIDを発信するためのビーコン信号を停止して、SSID一覧から見えなくすること。
 
 ```shell
 sudo airodump-ng wlan0 #周囲のWi-Fi情報を取得する。
 ```
-- 攻撃対象のwifiを見つけたら、BSSIDとCHをメモする。
+- 攻撃対象のwi-Fiを見つけたら、BSSIDとCHをメモする。
 
 ```
 #こんな感じでメモしよう(これはコマンドじゃないよ)
@@ -135,7 +135,7 @@ CH→5
 #### BSSIDって何？と思った人向け
 - BSSID: 無線LANにおける無線ネットワークの識別子。通常はMACアドレスをそのまま用いる。
 - CH(チャンネル): CHを指定することは、周波数を合わせることあり、チャンネルを指定することでパケットを取得できるようになる。
-- ESSID: 対象のwifi名のこと。スマホでWi-FI設定をするときに出てくるBuffaloGCD...みたいなやつのこと。
+- ESSID: 対象のWi-Fi名のこと。スマホでWi-FI設定をするときに出てくるBuffaloGCD...みたいなやつのこと。
 <length:6>のようなESSIDがついている時には、ESSIDが隠されていて6文字であるという意味である。
 
 
