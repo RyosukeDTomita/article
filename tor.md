@@ -224,15 +224,45 @@ Torを介した通信のみが許可されるので、ソフトやアプリケ�
 
 > Whonix Workstation: Gatewayによって構築されたネットワークのみを経由してインターネットに接続する。
 
+
 #### Ubuntu20.04側の設定
+##### 内部ネットワークを設定する
+ネットワークの割当を内部ネットワークに変更し、Whonixを指定する。
+
+##### Ubuntuのネットワーク設定
 設定を開いてネットワークを以下のように設定する。
+![設定](/home/tomita/article/picture/setting.png)
 
 |             |             |             |             |
 |-------------|-------------|-------------|-------------|
 |Address      |Netmask      |Gateway      |DNS          |
 |10.152.152.50|255.255.192.0|10.152.152.10|10.152.152.10|
+![ネットワークの設定](/home/tomita/article/picture/networksetting.png)
 
-![ネットワークの設定](/home/tomita/article/picture/networksetting.jpg)
+#### VPN over Torの接続テスト
+1. Whonix Gatewayを起動する。デフォルトユーザはuser,パスワードはchangemeである。
+2. Ubuntuを起動してIPアドレスを調べる。
+3. VPNをホスト側で起動する。
 
+```shell
+curl ipinfo.io
 
+{
+  "ip": "109.70.100.42",
+  "hostname": "tor-exit-anonymizer.appliedprivacy.net",
+  "city": "Vienna",
+  "region": "Vienna",
+  "country": "AT",
+  "loc": "48.2085,16.3721",
+  "org": "AS208323 Foundation for Applied Privacy",
+  "postal": "1010",
+  "timezone": "Europe/Vienna",
+  "readme": "https://ipinfo.io/missingauth"
+}
+```
+これを見ると接続先が変わっており、Torによる接続ができていることが確認できた。
+
+この状態でVPNを起動すれば、Exitノードと通信するのがVPNサーバとなる。今回はテストなので、Firefoxの拡張機能である、[CyberGhost VPN Free Proxy](https://addons.mozilla.org/ja/firefox/addon/cyberghost-vpn-free-proxy/)を使う。
+CyberGhost VPNはツールバーから簡単に使用できるがブラウジングにしか利用できない点に注意する。
+[CyberGhost](/home/tomita/article/picture/cyberghost.png)
 
