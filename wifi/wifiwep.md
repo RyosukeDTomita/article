@@ -33,13 +33,6 @@ ALFA AWUS036ACHのドライバーは公式サイトの[ドライバのインス�
 sudo apt update
 sudo apt install realtek-rtl88xxau-dkms
 ```
-- Ubuntuの場合はaptから直接インストールできないので[ドライバのインストールガイド](https://blog.abysm.org/2020/03/realtek-802-11ac-usb-wi-fi-linux-driver-installation/)からdebファイルをダウンロードした後、apt installにdebファイルを指定してインストールを行う。
-
-```shell
-#ubuntu
-sudo apt update
-sudo apt install ./realtek-rtl88xxau-dkms_5.6.4.2~git20200916-0kali1_all.deb
-```
 
 ### 認識されているか確認
 
@@ -98,6 +91,7 @@ sudo apt install aircrack-ng #必要なツールをインストールする。(�
 sudo airmon-ng start wlan0 #wlan0は先程メモした自身のネットワークインターフェースカードに置き換えること。
 sudo iwconfig #monitorモードになっていればmonitorと表示されているはず。
 ```
+- airmon-ngによってモニターモードに変更できない場合は手動でやるとうまく行くことがある。
 
 ```shell
 #手動でやる方法
@@ -119,7 +113,7 @@ sudo ip link set dev wlan0 up
 ### 周囲のWi-Fi情報を見る
 - 以下のコマンドを実行することで、周囲のWi-Fiを表示することができる。
 
-- ステルス設定のWi-Fiも表示される。
+- このコマンドを使うことでステルス設定のWi-Fiも表示される。
 > SSIDステルスとは: 無線ルータが自らのSSIDを発信するためのビーコン信号を停止して、SSID一覧から見えなくすること。
 
 ```shell
@@ -136,7 +130,7 @@ CH→5
 - BSSID: 無線LANにおける無線ネットワークの識別子。通常はMACアドレスをそのまま用いる。
 - CH(チャンネル): CHを指定することは、周波数を合わせることあり、チャンネルを指定することでパケットを取得できるようになる。
 - ESSID: 対象のWi-Fi名のこと。スマホでWi-FI設定をするときに出てくるBuffaloGCD...みたいなやつのこと。
-<length:6>のようなESSIDがついている時には、ESSIDが隠されていて6文字であるという意味である。
+<length:6>のようなESSIDがついている時には、ESSIDが隠されており、6文字である。
 
 
 ### パケットをキャプチャする
@@ -162,9 +156,10 @@ sudo aircrack-ng wep-01.cap wlan0
 
 
 ### パケットを集める方法
+パケットを増やすには一般的に2種類の方法がある。
 1. パケットが集まるまでひたすら待つ。
 2. **ARPリクエスト攻撃**やchopchop攻撃などによって能動的にパケットを増やす。
-今回の記事ではARPリクエスト攻撃を紹介する。
+今回の記事では2つめのARPリクエスト攻撃を紹介する。
 
 ### ARPリクエスト攻撃
 #### ARPとは
